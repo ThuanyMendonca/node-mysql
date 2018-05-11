@@ -42,10 +42,10 @@ var client = mysql.createConnection({
 client.query('USE ' + database);
 
 // inserir um registro na tabela
-// client.query(
-//     'INSERT INTO ' + tabela + '(cor_codigo, cor_descricao, cor_referencia) values (NULL, "AZUL", "005")'
-// );
-
+/*client.query(
+    'INSERT INTO ' + tabela + '(cor_codigo, cor_descricao, cor_referencia) values (NULL, "AZUL", "005")'
+);
+*/
 
 
 app.get('/cores', function(req, res)
@@ -60,8 +60,8 @@ app.get('/cores', function(req, res)
             throw err;
         }
 // enviar o resultado (retorno query) para o tamplete
-
-        res.send(results);
+        //res.send(results);
+        res.render('../views/lista_cores.ejs',{cores:results, title:'Lista'});
     }
 
     )

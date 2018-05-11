@@ -12,7 +12,7 @@
     <title>Lista de Cores</title>
 </head>
 <body>
-   <h1> Lista de Cores </h1> <hr>
+   <h1> Página da Cor Unica </h1> <hr>
    <table>
        <thead>
           <tr>
@@ -22,13 +22,12 @@
           </tr>  
         </thead>
         <tbody>
-            <% for (cor of cores){%>
                 <tr>
-                    <td><%= cor.cor_codigo%></td>
-                    <td><%= cor.cor_descricao%></td>
-                    <td><%= cor.cor_referencia%></td>                    
+                    <td><%=cor[0].cor_codigo%></td>                    
+                    <td><%=cor[0].cor_descricao%></td>
+                    <td><%=cor[0].cor_referencia%></td>                                        
                 </tr>
-            <%} %>
+
         </tbody>
     </table>
 </body>

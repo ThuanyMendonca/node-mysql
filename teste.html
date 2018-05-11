@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Teste</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<label for="num">Número:</label>
+	<input type="text" id="num">
+	<button onclick="adiciona(num)" id="adiciona">Adiciona</button>
+
+	<script type="text/javascript">
+		
+		// function adiciona(){
+		// 	var n = document.getElementById('num').value;
+		// 	console.log(n);
+
+		// 	var a = [];
+		// 	a.push(n);
+		// 	console.log(a);
+		// }
+
+		document.getElementById("adiciona").addEventListener("click", function adiciona(){		
+			var a = [];
+
+			for(i=0;i < 4;i++){
+				a[i] = document.getElementById('num').value;
+				
+			}
+			console.log(a);
+			
+		});
+	</script>
+</body>
+</html>
