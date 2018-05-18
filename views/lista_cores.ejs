@@ -10,6 +10,9 @@
     <meta name="viewport" content="width=, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Lista de Cores</title>
+
+    <a href = "cores/add"> Adicionar Cores </a>
+
 </head>
 <body>
    <h1> Lista de Cores </h1> <hr>
@@ -24,12 +27,13 @@
         <tbody>
             <% for (cor of cores){%>
                 <tr>
-                    <td><%= cor.cor_codigo%></td>
+                    <td><a href=<%= "/cores/views/" + cor.cor_codigo%>><%= cor.cor_codigo%></a></td>
                     <td><%= cor.cor_descricao%></td>
                     <td><%= cor.cor_referencia%></td>                    
                 </tr>
             <%} %>
         </tbody>
+            
     </table>
 </body>
 </html>
