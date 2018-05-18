@@ -1,28 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Cores</title>
+
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../public/bootstrap-4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/style.css">
+
 </head>
+
 <body>
-    <h1>Cadastro de Cores</h1> <hr>
 
-    <form action="/cores/add" method="post"> 
-        <label for="Descriçao da Cor"> Descrição:</label>
-        <input type="text" id="cor_descricao" name="cor_descricao" placeholder = "Informe a cor">
+    <h2>Adicionar Cores</h2>
 
-        <label for="Referência"> Referência:</label>
-        <input type="text" id="cor_referencia" name="cor_referencia" placeholder = "Informe a referência">
-        
-        <div class="button">
-            <button type="submit">Gravar Registro </button>
-        </div>
-    </form>
+    <a class="link" href="/cores">Voltar</a>
+
+    <form action="/cores/add" method="post">
+        <br>
+        <hr>
+
+        <fieldset>
+            <legend>
+                <h3>Dados da Cor</h3>
+            </legend>
+
+            <form>
+                <div>
+                    <label for="Descrição da Cor">Descrição..:</label>
+                    <input type="text" size="60" id="cor_descricao" name="cor_descricao" placeholder="Informe a Cor" />
+                    
+                </div>
+                <br>
+                <div>
+                    <label for="Referência da Cor">Referência:</label>
+                    <input type="text" size="15" maxlength="3" id="cor_referencia" name="cor_referencia" placeholder="Informe a Referência" />
+                    
+                </div>
+                <br>
+
+                <div class="button">
+                    <button type="submit">Gravar Regitro</button>
+                    <!--                    <button type="submit" class="btn btn-success">Gravar Regitro</button>       -->
+                </div>
+            </form>
+
+        </fieldset>
+        <!-- Pesquisa de registros pela descrição-->
+        <fieldset>
+            <legend>
+                <h3>Pesquisa</h3>
+            </legend>
+            <form action="/cores/pesquisa" method="GET">
+                <div>
+                    <label for="descricao">Descrição..: </label>
+                    <input type="text" size="60" id="descricao" name="descricao" />
+                </div>
+                <br>
+                <div class="button">
+                    <button type="submit">Pesquisar</button>
+                </div>
+
+            </form>
+        </fieldset>
+        <!-- listagem das cores cadastradas -->
+        <fieldset>
+
+            <legend>
+                <h3>Cores Cadastradas</h3>
+            </legend>
+            <table border="1" id="registros" class="table table-striped table-bordered table-hover">
+                <tr>
+                    <td> Código </td>
+                    <td> Descrição da Cor </td>
+                    <td> Referência </td>
+                </tr>
+            </table>
+            <br>
+
+            <div style="height: 100px; overflow-y: scroll;">
+                <tbody>
+                    <% for (cor of cores){%>
+                        <tr>
+                            <td>
+                                <%= cor.cor_codigo%>
+                            </td>
+                            <td>
+                                <%= cor.cor_descricao%>
+                            </td>
+                            <td>
+                                <%= cor.cor_referencia%>
+                            </td>
+
+                            <td>
+                                <a class="" href=<%="/cores_editar/views/" + cor.cor_codigo%>>
+                                    <i class="">Alterar</i>
+                                </a>
+                            </td>
+                            <td>
+                                <a class="" href=<%="/cores/excluir/" + cor.cor_codigo%>>
+                                    <i class="">Excluir</i>
+                                </a>
+                            </td>
+                        </tr>
+                        <br>
+                        <%} %>
+                </tbody>
+            </div>
 
 
+        </fieldset>
 
 
 </body>
+
 </html>

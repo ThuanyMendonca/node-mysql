@@ -11,8 +11,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Lista de Cores</title>
 
-    <a href = "cores/add"> Adicionar Cores </a>
+    <!-- Bootstrap
+    <link rel="stylesheet" href="../public/bootstrap-4.0.0/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="style/style.css" >    
+ -->
 
+    <hr>
+    <h3>
+       <a href="/cores/add"> Adicionar Novas Cores </a>
+    </h2>
+    <h3>
+    
 </head>
 <body>
    <h1> Lista de Cores </h1> <hr>
@@ -25,15 +34,16 @@
           </tr>  
         </thead>
         <tbody>
-            <% for (cor of cores){%>
+            
+               <% for (cor of cores){%>
                 <tr>
-                    <td><a href=<%= "/cores/views/" + cor.cor_codigo%>><%= cor.cor_codigo%></a></td>
+                    <td><a href=<%= "/cores/views/" + cor.cor_codigo%>><%= cor.cor_codigo%></a></td>  
                     <td><%= cor.cor_descricao%></td>
                     <td><%= cor.cor_referencia%></td>                    
-                </tr>
+                </tr> 
             <%} %>
-        </tbody>
-            
+
+        </tbody>            
     </table>
 </body>
 </html>

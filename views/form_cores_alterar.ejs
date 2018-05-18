@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cores</title>
+
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../public/bootstrap-4.0.0/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="style/style.css" >    
+    
+</head>
+<body>
+    
+    <h2>Alterar Cor</h2>
+
+    <a class="link" href="/cores">Voltar</a>
+
+    <form action="/cores/alterar" method="post"> <br> <hr>
+
+    <fieldset>
+        <legend><h3>Dados da Cor</h3></legend>
+
+            <form>    
+                <input type="hidden" name="cor_codigo" value="<%= cor[0].cor_codigo %>">
+                <div>
+                   <label for="Descrição da Cor">Descrição..:</label>
+                   <input type="text" size="60" id="cor_descricao" name="cor_descricao" value="<%= cor[0].cor_descricao %>">
+                   <placeholder="Informe a Cor">        
+                </div>
+                <br>
+                <div>
+                    <label for="Referência da Cor">Referência:</label>
+                    <input type="text" size="15" maxlength="3" id="cor_referencia" name="cor_referencia" value="<%= cor[0].cor_referencia %>">
+                    <placeholder="Informe a Referência">        
+                </div>
+                <br>
+                            
+                <div class="button">
+                   <button type="submit">Gravar Regitro</button>    
+    <!--                    <button type="submit" class="btn btn-success">Gravar Regitro</button>       -->
+                </div>
+            </form>
+    
+    </fieldset> 
+        
+</body>
+</html>

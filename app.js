@@ -9,6 +9,8 @@
 var express = require('express');
 var http = require('http');
 var path = require('path');
+var mysql = require('mysql');
+
 var body = require('body-parser');
 
 // express body-Parser permite a construção de objetos JSON 
@@ -21,7 +23,6 @@ app.use(body.json());
 
 app.set('port', 3000);
 
-var mysql = require('mysql');
 app.set("view engine", "ejs");
 
 http.createServer(app);
@@ -44,13 +45,6 @@ var client = mysql.createConnection({
 // colocar o banco de dados em uso - ativo
 client.query('USE ' + database);
 
-// inserir um registro na tabela
-/*
-client.query(
-    'INSERT INTO ' + tabela + '(cor_codigo, cor_descricao, cor_referencia) values (NULL, "VERMELHA", "006")'
-);
-*/
-
 
 // mostrar o resultado da pesquisa (JSON) no navegador
 app.get('/cores', function(req, res)
@@ -64,23 +58,23 @@ app.get('/cores', function(req, res)
         {
             throw err;
         }
-// enviar o resultado (retorno query) para o tamplete
-//        res.send(results);
-        res.render('../views/lista_cores.ejs', {cores: results, title:'Lista'  })
+          res.render('../views/lista_cores.ejs', {cores: results, title:'Lista'  })       
     }
 
     )
+
 }
 )
 
-
-// mostrar o resultado da pesquisa (JSON) no navegador
+// GET - Mostrar registro unico no formulario - localiza pelo codigo
 app.get('/cores/views/:codigo', function(req, res)
+
 {
-console.log(req.params.codigo)
+    console.log(req.params.codigo)    
     client.query
     (
-    'SELECT * FROM ' + tabela + ' WHERE cor_codigo = ' + parseInt(req.params.codigo), 
+//    'SELECT * FROM ' + tabela + ' WHERE cor_codigo = ' + parseInt(req.params.codigo), 
+    'SELECT * FROM ' + tabela + ' WHERE cor_codigo = ' + req.params.codigo, 
 
     function(err, result, fields)
     {
@@ -97,25 +91,115 @@ console.log(req.params.codigo)
 )
 
 
-// adicionar novo registro na tabela 
-app.get('/cores/add', function(req, res)
+// GET - Mostrar registro no formulário de alteração - localiza pelo codigo
+app.get('/cores_editar/views/:codigo', function(req, res)
+
 {
-    res.render('form_cores', {title:'Cadastro de Cores'});
-})
+    console.log(req.params.codigo)    
+    client.query
+    (
+    'SELECT * FROM ' + tabela + ' WHERE cor_codigo = ' + req.params.codigo, 
 
-app.post('/cores/add', function(req, res)
-{
-    var dados = req.body;
-    console.log("Descrição..:" + req.body.cor_descricao);
-    console.log("Referencia.:" + req.body.cor_referencia);
+    function(err, result, fields)
+    {
+        if(err)
+        {
+            throw err;
+        }
+// enviar o resultado (retorno query) para o tamplete
+        res.render('../views/form_cores_alterar.ejs', {cor: result, title:result[0].cor_descricao})
+    }
 
-    var msql = 'INSERT INTO ' + tabela + ' SET ? ';
-    client.query( msql, dados);
-
-    res.redirect('/cores');    
+    )
 }
 )
 
+
+// GET - Adicionar novo registro de cores
+app.get('/cores/add', function(req, res)
+{
+    client.query
+    (
+    'SELECT * FROM ' + tabela, 
+    function(err, results, fields)
+    {
+        if(err)
+        {
+            throw err;
+        }
+        res.render('form_cores', {cores: results, title: 'Cadastrar Cores'});
+    }
+
+    )
+})
+
+// POST - gravar o novo registro no banco de dados
+app.post('/cores/add', function(req, res)
+{
+
+    console.log("Body....: ", req.body);
+    var dados = req.body;
+
+    var descricao  = req.body.cor_descricao;
+    var referencia = req.body.cor_referencia;
+
+    console.log("Dados.: ", referencia, " Desc: ",descricao);
+    
+
+    var msql = 'INSERT INTO ' + tabela + ' SET ? ';
+
+    client.query(msql, dados);
+
+    console.log("SQL: ", msql + dados);
+
+    res.redirect('/cores')
+
+}
+)
+
+
+// POST - gravar a alteração do registro
+app.post('/cores/alterar', function(req, res)
+{
+
+    console.log("Body....: ", req.body);
+    var dados = req.body;
+
+    var codigo = req.body.cor_codigo;
+    var descricao  = req.body.cor_descricao;
+    var referencia = req.body.cor_referencia;
+
+    console.log("Dados.: ", referencia, " Desc: ",descricao);
+    
+
+    var msql = "UPDATE " + tabela + " SET cor_descricao = '" + descricao + "' , cor_referencia = " + referencia + " WHERE cor_codigo = " + codigo;
+
+    client.query(msql, dados);
+
+    console.log("SQL: ", msql + dados);
+
+    res.redirect('/cores/add')
+
+}
+)
+
+
+// DELETE - Deletar registro - localiza pelo codigo
+app.get('/cores/excluir/:codigo', function(req, res)
+
+{
+    var codigo = req.params.codigo 
+    console.log(req.params.codigo)    
+
+    var msql = 'DELETE FROM ' + tabela + ' WHERE cor_codigo = ' + codigo;
+
+    client.query(msql);
+
+    console.log("SQL: ", msql);
+
+    res.redirect('/cores/add')
+}
+)
 
 http.createServer(app).listen(app.get('port'), function() {
         console.log('Express escutando na porta ' + app.get('port'));

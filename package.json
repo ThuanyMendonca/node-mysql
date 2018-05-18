@@ -1,16 +1,16 @@
 {
-  "name": "node-mysql",
+  "name": "dados",
   "version": "1.0.0",
-  "description": "Projeto Node com Mysql",
+  "description": "",
   "main": "app.js",
+  "dependencies": {
+    "ejs": "^2.5.9",
+    "express": "^4.16.3"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Thuany Mendonca",
-  "license": "ISC",
-  "dependencies": {
-    "ejs": "^2.5.9",
-    "express": "^4.16.3",
-    "mysql": "^2.15.0"
-  }
+  "author": "",
+  "license": "ISC"
 }
